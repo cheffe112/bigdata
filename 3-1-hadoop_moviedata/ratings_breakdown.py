@@ -9,14 +9,13 @@ class RatingsBreakdown(MRJob):
                    reducer=self.reducer_count_ratings)
         ]
 
+    'Wichtig: Einbinden der Datei unter Run --> Edit Configurations'
     def mapper_get_ratings(self, _, line):
-        # TODO add your code here
-        pass
+        (user_id, movie_id, rating, timestamp) = line.split('\t')
+        yield rating, 1
 
     def reducer_count_ratings(self, movie_id, count):
-        # TODO add your code here
-        pass
-
+        yield movie_id, sum(count)
 
 if __name__ == '__main__':
     RatingsBreakdown.run()
